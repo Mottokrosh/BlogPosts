@@ -176,13 +176,13 @@ For convenience, we're defining `writeToFile()` as a re-usable function. We're o
 
 We then call the `createWriter()` method on the `fileEntry` instance, which in turn gives us a `fileWriter` instance (phew). For illustration, I've set up 2 listeners on this instance, but as you can see they're not actually needed in this instance. What we're required to do is to create a new blob and write that to the file.
 
-The first parameter for the Blod constructor is an array with our data as its sole item. This may seem odd in our case, but it is correct. I'll be honest - I've not gone through enough of the Blob spec to figure out why that is. The second argument is a configuration object, with a format type. Here, we specify `text/plain` (not, say, `application/json`) because that's what our file will be. Yes, the content will be JSON, but JSON is just plain text, and we're not telling the filesystem to interpret it (like we would if we were to serve it to a browser).
+The first parameter for the Blob constructor is an array with our data as its sole item. This may seem odd in our case, but it is correct. I'll be honest - I've not gone through enough of the Blob spec to figure out why that is. The second argument is a configuration object, with a format type. Here, we specify `text/plain` (not, say, `application/json`) because that's what our file will be. Yes, the content will be JSON, but JSON is just plain text, and we're not telling the filesystem to interpret it (like we would if we were to serve it to a browser).
 
-So that's how you write your JSON to a file, and yes, it's rather different from reading a file.
+And that's how you write your JSON to a file, and yes, it's rather different from reading a file.
 
 ## Wishful API
 
-We have seen that the File plugin's API and usage is complex. It allows for maximum versatility, but it's also based on defunct specifications, which might have been streamlined had they been examined further. I don't have the know-how to implement this for all the currently supported platforms of this plugin, but here's my suggestion or wish for an API that could sit on top on the current one.
+We have seen that the File plugin's API and usage is complex. It allows for maximum versatility, but it's also based on defunct specifications, which might have been streamlined had they been examined further. I don't have the know-how to implement this for all the currently supported platforms of this plugin, but here's my suggestion (or wish) for an API that could sit on top on the current one.
 
 ### Write or Append to a File
 
@@ -197,7 +197,7 @@ cordova.file.append(fileName, {}, successHandler, errorHandler); // with { creat
 cordova.file.read(fileName, { type: 'text/plain' }, successHandler, errorHandler);
 ```
 
-The fileName could either be an absolute path that the developer constructs using the various cordova.file.* locations that the plugin exposes, or, alternatively, be specified as part of the configuration object (the second parameter), e.g. `{ basePath: cordova.file.dataDirectory }`.
+The fileName could either be an absolute path that the developer constructs using the various `cordova.file.*` locations that the plugin exposes, or, alternatively, be specified as part of the configuration object (the second parameter), e.g. `{ basePath: cordova.file.dataDirectory }`.
 
 If one were to go down that route, I would additionally suggest being able to specify configuration options globally for an app:
 
@@ -211,11 +211,11 @@ cordova.file.options({
 
 ## Conclusion
 
-The code above is the result of several days' of reading documentation, trawling blog posts, and experimentation. For all I know, I'm still doing some things wrong.
+The code above is the result of several days' of reading documentation, trawling through blog posts, and experimentation. For all I know, I'm still doing some things wrong.
 
 Development in the world of Javascript moves at a rapid pace, and documentation doesn't always keep up. Add to that the fact that many front-end developers are smart, good-looking, and smell nice, and are often deeply involved with the technologies they're using themselves, it can sometimes be hard to break into a particular technology when coming to it for the first time.
 
-I remember a long time ago I was trying to write to a file in PHP. Sure enough I had to open a pointer/handler to the file, seek around it, and then stream data to disk, before finally releasing the open handler. Then, a while later, `file_put_contents()` and `file_get_contents()` came along and drastically simplified things for 99% of the use cases.
+I remember a long time ago I was trying to write to a file in PHP. Sure enough, I had to open a pointer/handler to the file, seek around it, and then stream data to disk, before finally releasing the open handler again. Then, a while later, `file_put_contents()` and `file_get_contents()` came along and drastically simplified things for 99% of the use cases.
 
 Sure it's nice to have all the power, but when designing APIs, ask yourselves what the main use cases are, and try and make those as easy and intuitive as possible. Then document them well.
 
