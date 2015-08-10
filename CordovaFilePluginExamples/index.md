@@ -174,7 +174,7 @@ A lot going on there, let's break it down.
 
 For convenience, we're defining `writeToFile()` as a re-usable function. We're opening a connection to the dataDirectory, which returns a `directoryEntry` instance, with - among others - a `getFile()` method. We're calling this method with a filename, and a configuration object that tells the method to create the file if it doesn't exist.
 
-We then call the `createWriter()` method on the `fileEntry` instance, which in turn gives us a `fileWriter` instance (phew). For illustration, I've set up 2 listeners on this instance, but as you can see they're not actually needed in this instance. What we're required to do is create new blob and write that to the file.
+We then call the `createWriter()` method on the `fileEntry` instance, which in turn gives us a `fileWriter` instance (phew). For illustration, I've set up 2 listeners on this instance, but as you can see they're not actually needed in this instance. What we're required to do is to create a new blob and write that to the file.
 
 The first parameter for the Blod constructor is an array with our data as its sole item. This may seem odd in our case, but it is correct. I'll be honest - I've not gone through enough of the Blob spec to figure out why that is. The second argument is a configuration object, with a format type. Here, we specify `text/plain` (not, say, `application/json`) because that's what our file will be. Yes, the content will be JSON, but JSON is just plain text, and we're not telling the filesystem to interpret it (like we would if we were to serve it to a browser).
 
