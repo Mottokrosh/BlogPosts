@@ -139,7 +139,7 @@ var errorHandler = function (fileName, e) {
 
 By itself, any error handler you specify is passed an error object as parameter, which holds little more than an error code. We're calling `.bind(null, fileName)` on the function when we specify it as the error handler, so that its first parameter becomes the filename instead. (The `null` value is so that errorHandler retains its own context.)
 
-## Writing a File
+## Writing to a File
 
 Here then is the other obvious use case: writing some data to a file. In this example, we'll write some JSON. Here is the code:
 
