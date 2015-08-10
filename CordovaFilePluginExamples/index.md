@@ -55,7 +55,9 @@ window.webkitStorageInfo.requestQuota(PERSISTENT, 1024*1024, function (grantedBy
 
 Here is what neither the HTML5 Rocks article (sensibly, since its concern is the browser API), nor the [plugin documentation](https://github.com/apache/cordova-plugin-file#cordova-plugin-file), nor some of the [very few example usage articles](http://stackoverflow.com/questions/22336352/how-do-you-store-a-file-locally-using-apache-cordova-3-4-0), say:
 
-> You don't need either of those two steps when using the Cordova File Plugin.
+```
+You don't need either of those two steps when using the Cordova File Plugin.
+```
 
 Only this [collection](http://www.raymondcamden.com/2014/07/15/Cordova-Sample-Reading-a-text-file) of [example use cases](http://www.raymondcamden.com/2014/11/05/Cordova-Example-Writing-to-a-file) hints at their superflousness.
 
