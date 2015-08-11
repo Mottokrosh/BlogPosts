@@ -1,6 +1,6 @@
 # Cordova File Plugin Examples
 
-I found myself in need of writing potentially large amounts of data to the file system in a Cordova app I'm working on. Naturally, I reached for the [Cordova File Plugin](https://github.com/apache/cordova-plugin-file), as a handful of cursory Google searches revealed it to be the *de facto* plugin for this task. However, its documentation, while talking about the plugin's quirks, is lacking in examples, and the main [blog post it points to for usage](http://www.html5rocks.com/en/tutorials/file/filesystem/) is old, and not all of it is relevant the plugin. In this post, I aim to detail what I have learned, to make it easier for other people to get started with this useful plugin.
+I found myself in need of writing potentially large amounts of data to the file system in a Cordova app I'm working on. Naturally, I reached for the [Cordova File Plugin](https://github.com/apache/cordova-plugin-file), as a handful of cursory Google searches revealed it to be the *de facto* plugin for this task. However: its documentation, while talking about the plugin's quirks, is lacking in examples, the main [blog post it points to for usage](http://www.html5rocks.com/en/tutorials/file/filesystem/) is old, and not all of it is relevant the plugin. In this post, I aim to detail what I have learned, to make it easier for other people to get started with this useful plugin.
 
 ## The API Has It
 
@@ -21,11 +21,11 @@ Now, admittedly, it's a bit of a shame that the object to JSON conversion isn't 
 
 The File Plugin implements the [HTML5 File API](http://www.w3.org/TR/FileAPI/), plus several others, many of which are since defunct. The result is a very versatile plugin, with low-level access to much functionality. The flip-side is that basic read/write operations (arguably the lion's share of all use cases), are not obvious, nor their usage consistent.
 
-As I mentioned above, the [HTML5 Rocks FileSystem](http://www.html5rocks.com/en/tutorials/file/filesystem/) article is linked to for usage examples. That article concerns itself with how one would use the API in a browser. What it doesn't say on that article, or on the plugin documentation, is that the plugin takes care of some of the boilerplate you have to content with when trying to use the File API in a browser.
+As I mentioned above, the [HTML5 Rocks FileSystem](http://www.html5rocks.com/en/tutorials/file/filesystem/) article is linked to for usage examples. That article concerns itself with how one would use the API in a browser. What it doesn't say in that article, or in the plugin documentation, is that the plugin takes care of some of the boilerplate you have to contend with when trying to use the File API in a browser.
 
 ## Case In Point
 
-In a browser, the File API requires you to firstly:
+In a browser, the File API requires you to:
 
 1. request a filesystem,
 2. specify whether it is to be temporary, or persistent,
@@ -59,7 +59,7 @@ Here is what neither the HTML5 Rocks article (sensibly, since its concern is the
 You don't need either of those two steps when using the Cordova File Plugin.
 ```
 
-Only this [collection](http://www.raymondcamden.com/2014/07/15/Cordova-Sample-Reading-a-text-file) of [example use cases](http://www.raymondcamden.com/2014/11/05/Cordova-Example-Writing-to-a-file) hints at their superflousness.
+Only this [collection](http://www.raymondcamden.com/2014/07/15/Cordova-Sample-Reading-a-text-file) of [example use cases](http://www.raymondcamden.com/2014/11/05/Cordova-Example-Writing-to-a-file) hints at their superfluity.
 
 With the Cordova File Plugin, there are two essential pieces of information to remember:
 
@@ -70,7 +70,7 @@ With the Cordova File Plugin, there are two essential pieces of information to r
 
 ## Reading the Contents of a File
 
-Here is the first of the two main use cases (the other one being writing a file). For this example we assume a plain text file with some JSON in it. It's pretty much the same for any other plain text file, whereas it gets a little more complicated should you wish to read binary data.
+This the first of the two main use cases, the other one being writing a file. For this example, we assume a plain text file with some JSON in it. It's pretty much the same for any other plain text file, whereas it gets a little more complicated should you wish to read binary data.
 
 ```javascript
 document.addEventListener('deviceready', onDeviceReady, false);
@@ -96,11 +96,11 @@ function onDeviceReady() {
 
 Let's have a look at a few of the things going on in this snippet.
 
-Firstly, we wait for the `deviceready` event. In your app, you likely have done this already way before you start any reading or writing of files, but it's important to remember.
+Firstly, we wait for the `deviceready` event. In your app, you have likely done this already way before you start any reading or writing of files, but it's important to remember.
 
 Secondly, we construct a path for `window.resolveLocalFileSystemURL()` with the magic `cordova.file.dataDirectory` value that the File Plugin exposes for us. This is one of several values for the various paths your app can access. They are [well documented](https://github.com/apache/cordova-plugin-file#where-to-store-files) on the Plugin page. In this case, it's a private data directory within your app's filesystem that won't sync with iCloud. (If you want this iOS only functionality, use `cordova.file.syncedDataDirectory`.)
 
-Then come a bunch of complicated, confusingly labelled functions, instances, and event handlers. Essentially though, we're calling `readAsText()` on our file pointer, after having set up an event handler for the `loadend` event, which will be triggered when `readAsText()` reaches the end of the file. Its parameter is the event object, and the `this` context contains our data in its `result` property. You can also find it at `e.target.result`.
+Then come a bunch of complicated, confusingly labelled, functions, instances, and event handlers. Essentially though, we're calling `readAsText()` on our file pointer, after having set up an event handler for the `loadend` event, which will be triggered when `readAsText()` reaches the end of the file. Its parameter is the event object, and the `this` context contains our data in its `result` property. You can also find it at `e.target.result`.
 
 Makes you a little jealous of localStorage's `getItem()` method, doesn't it? :)
 
@@ -172,7 +172,7 @@ function onDeviceReady() {
 
 A lot going on there, let's break it down.
 
-For convenience, we're defining `writeToFile()` as a re-usable function. We're opening a connection to the dataDirectory, which returns a `directoryEntry` instance, with - among others - a `getFile()` method. We're calling this method with a filename, and a configuration object that tells the method to create the file if it doesn't exist.
+For convenience, we're defining `writeToFile()` as a re-usable function. We're opening a connection to the dataDirectory, which returns a `directoryEntry` instance, with - amongst others - a `getFile()` method. We're calling this method with a filename, and a configuration object that tells the method to create the file if it doesn't exist.
 
 We then call the `createWriter()` method on the `fileEntry` instance, which in turn gives us a `fileWriter` instance (phew). For illustration, I've set up 2 listeners on this instance, but as you can see they're not actually needed in this instance. What we're required to do is to create a new blob and write that to the file.
 
@@ -180,7 +180,7 @@ The first parameter for the Blob constructor is an array with our data as its so
 
 And that's how you write your JSON to a file, and yes, it's rather different from reading a file.
 
-## Wishful API
+## Wistful API
 
 We have seen that the File plugin's API and usage is complex. It allows for maximum versatility, but it's also based on defunct specifications, which might have been streamlined had they been examined further. I don't have the know-how to implement this for all the currently supported platforms of this plugin, but here's my suggestion (or wish) for an API that could sit on top on the current one.
 
