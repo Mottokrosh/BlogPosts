@@ -7,7 +7,7 @@ I found myself in need of writing potentially large amounts of data to the file 
 A great API is simple, and a joy to work with. Here is an example:
 
 ```javascript
-localStorage.setItem('myKey', JSON.stringify({ my: data }, null, '\t'));
+localStorage.setItem('myKey', JSON.stringify({ my: 'data' }, null, '\t'));
 
 var data = localStorage.getItem('myKey');
 if (data) {
@@ -137,7 +137,8 @@ var errorHandler = function (fileName, e) {
 }
 ```
 
-By itself, any error handler you specify is passed an error object as parameter, which holds little more than an error code. We're calling `.bind(null, fileName)` on the function when we specify it as the error handler, so that its first parameter becomes the filename instead. (The `null` value is so that errorHandler retains its own context.)
+By itself, any error handler you specify is passed an error object as parameter, which holds little more than an error code. We're calling `.bind(null, fileName)` on the function when we specify it as the error handler, so that its first parameter becomes the filename instead. (The first argument to [`.bind`
+](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function/bind) is used for the context, passing `null` means it will default to the last bound `this` keyword, in this case `window`.)
 
 ## Writing to a File
 
@@ -146,6 +147,12 @@ Here then is the other obvious use case: writing some data to a file. In this ex
 ```javascript
 document.addEventListener('deviceready', onDeviceReady, false);
 function onDeviceReady() {
+	// it could be worth weaving a callback into this function
+	// E.G: 
+	// function writeToFile(fileName, data, callback) {
+	// 	function errorHandler(filename, e) {
+	// 		...
+	// 		e.message = msg; callback(e, someSuccessDataMaybe);
 	function writeToFile(fileName, data) {
 		data = JSON.stringify(data, null, '\t');
 		window.resolveLocalFileSystemURL(cordova.file.dataDirectory, function (directoryEntry) {
