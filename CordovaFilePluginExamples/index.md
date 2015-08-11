@@ -1,6 +1,6 @@
 # Cordova File Plugin Examples
 
-I found myself in need of writing potentially large amounts of data to the file system in a Cordova app I'm working on. Naturally, I reached for the [Cordova File Plugin](https://github.com/apache/cordova-plugin-file), as a handful of cursory Google searches revealed it to be the *de facto* plugin for this task. However: its documentation, while talking about the plugin's quirks, is lacking in examples, the main [blog post it points to for usage](http://www.html5rocks.com/en/tutorials/file/filesystem/) is old, and not all of it is relevant the plugin. In this post, I aim to detail what I have learned, to make it easier for other people to get started with this useful plugin.
+I found myself in need of writing potentially large amounts of data to the file system in a Cordova app I'm working on. Naturally, I reached for the [Cordova File Plugin](https://github.com/apache/cordova-plugin-file), as a handful of cursory Google searches revealed it to be the *de facto* plugin for this task. However: its documentation, while talking about the plugin's quirks, is lacking in examples, the main [blog post it points to for usage](http://www.html5rocks.com/en/tutorials/file/filesystem/) is old, and not all of it is relevant to the plugin. In this post, I aim to detail what I have learned, to make it easier for other people to get started with this useful plugin.
 
 ## The API Has It
 
@@ -180,7 +180,7 @@ The first parameter for the Blob constructor is an array with our data as its so
 
 And that's how you write your JSON to a file, and yes, it's rather different from reading a file.
 
-## Wistful API
+## Wishful API
 
 We have seen that the File plugin's API and usage is complex. It allows for maximum versatility, but it's also based on defunct specifications, which might have been streamlined had they been examined further. I don't have the know-how to implement this for all the currently supported platforms of this plugin, but here's my suggestion (or wish) for an API that could sit on top on the current one.
 
